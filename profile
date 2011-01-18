@@ -1,20 +1,14 @@
-source $HOME/.homebrew/Library/Contributions/brew_bash_completion.sh
-source $HOME/.homebrew/etc/bash_completion.d/git-completion.bash
-source $HOME/.homebrew/etc/bash_completion.d/git-flow-completion.bash
-source $HOME/.homebrew/etc/bash_completion.d/npm-completion.sh
+source /usr/local/Library/Contributions/brew_bash_completion.sh
+source /usr/local/etc/bash_completion.d/git-completion.bash
 
-PATH="$(python -c "from sys import prefix; print prefix")/bin:$HOME/.homebrew/share/npm/bin:$HOME/.homebrew/bin:$HOME/.homebrew/sbin:$PATH"
-export PATH
-export EDITOR='mate -w'
-export GIT_EDITOR='mate -wl1'
-export LESSEDIT='mate -l %lm %f'
+#export EDITOR='mate -w'
+#export GIT_EDITOR='mate -wl1'
+#export LESSEDIT='mate -l %lm %f'
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
-
-[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"  # This loads RVM into a shell session.
 
 function __git_dirty {
   git diff --quiet HEAD &>/dev/null 
@@ -23,15 +17,6 @@ function __git_dirty {
 
 function __git_branch {
   __git_ps1 " %s"
-}
-
-function __my_rvm_ruby_version {
-  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
-  [ "$gemset" != "" ] && gemset="@$gemset"
-  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
-  [ "$version" == "1.9.2" ] && version=""
-  local full="$version$gemset"
-  [ "$full" != "" ] && echo "$full "
 }
 
 bash_prompt() {
@@ -70,7 +55,7 @@ bash_prompt() {
   local UC=$W                 # user's color
   [ $UID -eq "0" ] && UC=$R   # root's color
 
-  PS1="$EMB\$(__my_rvm_ruby_version)$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} $ "
+  PS1="$EMB$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} <3 "
 }
 
 bash_prompt
