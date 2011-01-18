@@ -10,6 +10,8 @@ if [ -d "$HOME/.bin" ] ; then
     PATH="$HOME/.bin:$PATH"
 fi
 
+export PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+
 function __git_dirty {
   git diff --quiet HEAD &>/dev/null 
   [ $? == 1 ] && echo "!"
@@ -31,6 +33,7 @@ bash_prompt() {
   local M="\[\033[0;35m\]"    # magenta
   local C="\[\033[0;36m\]"    # cyan
   local W="\[\033[0;37m\]"    # white
+  local P="\[\033[1;35m\]"    # bash pink
 
   # emphasized (bolded) colors
   local EMK="\[\033[1;30m\]"
@@ -55,7 +58,7 @@ bash_prompt() {
   local UC=$W                 # user's color
   [ $UID -eq "0" ] && UC=$R   # root's color
 
-  PS1="$EMB$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} <3 "
+  PS1="$EMB$Y\h$W:$EMY\w$EMW\$(__git_branch)$EMY\$(__git_dirty)${NONE} $P<3${NONE} "
 }
 
 bash_prompt
